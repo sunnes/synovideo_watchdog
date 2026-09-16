@@ -1,0 +1,16 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+*.egg-info/
+
+# Output
+screenshot_*.png
+go_watchdog/go_watchdog
+
+# OS
+.DS_Store
