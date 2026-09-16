@@ -62,7 +62,7 @@ Both implementations read connection settings from `.env`:
 | `SYNO_PASSWORD` | yes | — | Surveillance Station password |
 | `SYNO_CAMERA` | yes | — | Camera name |
 | `SYNO_PROFILE` | no | `0` | Stream profile: `0` main, `1` sub-stream |
-| `SYNO_TIMEOUT` | no | `30` | Seconds to wait for a decodable frame |
+| `SYNO_TIMEOUT` | no | `30` | Seconds to wait for a decodable frame; do not set below `15` |
 | `SYNO_VERIFY_SSL` | no | `true` | Set to `false` for a self-signed certificate |
 
 Copy the example and set the connection details:
@@ -70,6 +70,12 @@ Copy the example and set the connection details:
 ```sh
 cp .env.example .env
 ```
+
+Do not set `SYNO_TIMEOUT` lower than 15 seconds. The watchdog needs at least
+that long to observe stream startup and a keyframe interval before it can
+reliably conclude that the required H.265 VPS/SPS/PPS headers are not present.
+A shorter timeout can expire before those headers arrive and falsely report a
+healthy stream as failed.
 
 ### Go watchdog settings
 
